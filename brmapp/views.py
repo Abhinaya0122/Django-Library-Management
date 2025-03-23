@@ -3,9 +3,16 @@ from django.http import HttpResponse,HttpResponseRedirect
 
 from .models import Book
 # Create your views here.
+
+def indexview(request):
+    return render(request,"home.html")
+
 def helloView(request):
     books=Book.objects.all()
     return render(request,"viewbook.html",{"books":books})
+
+def aboutus(request):
+    return render(request,"about.html")
 
 def addBookView(request):
     return render(request,"addbook.html")
