@@ -1,0 +1,81 @@
+<!-- <a class="nav-link" href="/admin_login">admin</a> -->
+        <!-- <a class="nav-link" href="/stud_login">stud</a> -->
+
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Loading...</title>
+          <link rel="icon" href="static/favicon.ico" type="image/x-icon">
+          <style>
+            body {
+              margin: 0;
+              padding: 0;
+              height: 100vh;
+              background: linear-gradient(to left, #ebcfec, #ffffff);
+
+        
+            }
+            .main{
+              padding-left: 6%;
+              padding-top: 28%;
+            }
+            h1{
+              color: #0955ce;
+            }
+        
+            .card-container {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 20px;
+              justify-content: center;
+              align-items: center;
+              padding: 20px; /* Add padding to the container */
+            }
+            p{
+             /* Font size */
+              line-height: 1.5;  /* Line height, here it is 2 times the font size */
+              font-family: sans-serif;
+            }
+        
+            .card {
+              background-color: #fff;
+              border-radius: 5px;
+              padding: 15px;
+              box-shadow: 0 2px 5px hsla(0, 13%, 3%, 0.1);
+              width: 300px;
+            }
+            .pic{
+              height: 100vh;
+              width: 100%;
+              background-repeat: no-repeat;
+              background-image: url('https://www.kongu.ac.in/facilities/library/images/cdlibrary.JPG');
+              background-size: cover;
+            }
+            .container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr; /* Two columns with equal width */
+                    gap: 10px; /* Space between the divs */
+                }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+          <div class="main">
+            <h1>Welcome to Kongu Engineering College</h1>
+<p>This webpage is designed to streamline library management by offering an efficient, user-friendly platform for both librarians and users. Librarians can easily log in to manage book inventories, issue and return books, and generate reports. Users can log in to browse available books, check their borrowing history, and track due dates. The system aims to enhance transparency, minimize manual errors, and save time for all stakeholders. Our goal is to deliver a seamless experience that supports library operations and improves overall efficiency.</p>            
+            <h3>Are you admin? <a href="/admin_login">Login_Here</a></h3>
+            
+            
+            <h3>Are you Student? <a href="/stud_login">Login_Here</a></h3>
+            
+          </div>
+          <div class="pic">
+          </div>
+        </div>
+        </a>
+         
+        </body>
+        </html>
