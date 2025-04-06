@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse,HttpResponseRedirect
 
-from .models import Book
+from .models import Book, Borrow
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
@@ -64,6 +64,9 @@ def aboutus(request):
 def addBookView(request):
     return render(request,"addbook.html")
 
+def myborrow(request):
+    return render(request,"borrowedbooks.html")
+
 def manage_book(request):
     books=Book.objects.all()
     for book in books:
@@ -91,13 +94,13 @@ def addBook(request):
 def editBook(request):
     if request.method=="POST":
         t=request.POST["title"]
-        p=request.POST["price"]
+        p=request.POST["availability"]
         
         book=Book.objects.get(id=request.POST['bid'])
         book.title=t
-        book.price=p
+        book.availability=p
         book.save()
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/admin_dashboard')
 
 
 def editBookView(request):
@@ -109,3 +112,49 @@ def deleteBookView(request):
     book=Book.objects.get(id=request.GET['bookid'])
     book.delete()
     return HttpResponseRedirect('/')
+
+ 
+@login_required
+def borrow_book(request):
+    book_id = request.GET.get('bookid')
+    book = get_object_or_404(Book, id=book_id)
+
+    if book.availability:
+        Borrow.objects.create(book=book, user=request.user)
+        book.availability -=1
+        book.save()
+
+    return redirect('/dashboard')
+
+@login_required
+def my_borrowed_books(request):
+    print("Logged in user:", request.user)
+    print("Borrowed books:", Borrow.objects.filter(user=request.user, returned=False))
+
+    borrowed = Borrow.objects.filter(user=request.user, returned=False)
+    return render(request, 'borrowedbooks.html', {'borrowed': borrowed})
+
+
+@login_required
+def returnbook(request):
+    borrow_id = request.GET.get('borrowid')  # Corrected here
+    try:
+        borrowed_book = Borrow.objects.get(id=borrow_id, user=request.user, returned=False)
+    except Borrow.DoesNotExist:
+        return redirect('/dashboard')  # or show an error message
+
+    # Update book availability
+    book = borrowed_book.book
+    book.availability +=1
+    book.save()
+
+    borrowed_book.returned = True
+    borrowed_book.save()
+
+    return redirect('/dashboard')
+
+@login_required
+def admin_borrow_list(request):
+    all_borrows = Borrow.objects.select_related('book', 'user').all().order_by('-borrowed_at')
+    return render(request, 'admin_borrow_list.html', {'borrows': all_borrows})
+

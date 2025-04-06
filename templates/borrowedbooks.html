@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Borrowed Books</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+  <style>
+    .book-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .book-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .book-card:hover .card-footer {
+        display: block !important;
+        background-color: rgba(255, 255, 255, 0.95);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 12px;
+        z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-4">
+    <h1 class="mb-4">All Borrowed Books</h1>
+    <div class="row">
+        {% for borrow in borrowed %}
+        <div class="col-md-3 mb-4">
+            <div class="card book-card h-100 shadow-sm">
+                <img src="{{ borrow.book.image_url }}" class="card-img-top" alt="{{ borrow.book.title }}" style="height: 250px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ borrow.book.title }}</h5>
+                </div>
+                <div class="card-footer text-center" style="display: none;">
+                    <p class="mb-1"><strong>Author:</strong> {{ borrow.book.author }}</p>
+                    <p class="mb-1"><strong>Price:</strong> ₹{{ borrow.book.price }}</p>
+                    <p class="mb-2"><strong>Status:</strong> Borrowed</p>
+                    <a href="/return-book?borrowid={{ borrow.id }}" class="btn btn-primary btn-sm">Return</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted mx-auto">No borrowed books found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

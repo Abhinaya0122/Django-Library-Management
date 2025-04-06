@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Borrowed</title>
+    </head>
+    <body>
+    
+{% block content %}
+<div class="container">
+    <h2>Borrowed Books Report</h2>
+    <table border="1" cellspacing="0" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Book Title</th>
+                <th>Borrowed Date</th>
+                <th>Returned</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for borrow in borrows %}
+            <tr>
+                <td>{{ borrow.user.username }}</td>
+                <td>{{ borrow.book.title }}</td>
+                <td>{{ borrow.borrowed_at }}</td>
+                <td>
+                    {% if borrow.returned %}
+                        ✅ Yes
+                    {% else %}
+                        ❌ No
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No borrow records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+    </body>
+</html>

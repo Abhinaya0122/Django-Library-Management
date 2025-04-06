@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path,include,re_path
-from .views import aboutus, admin_dashboard, admin_login_view, helloView,addBookView,addBook,editBook,editBookView,deleteBookView, indexview, landing, login_view, manage_book
+from .views import aboutus, admin_borrow_list, admin_dashboard, admin_login_view, helloView,addBookView,addBook,editBook,editBookView,deleteBookView, indexview, landing, login_view, manage_book, borrow_book, my_borrowed_books, myborrow, returnbook
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -18,5 +18,10 @@ urlpatterns = [
     path("edit-book/",editBookView),
     path("edit-book/edit",editBook),
     path("delete-book",deleteBookView),
-    path('logout/', LogoutView.as_view(next_page='login'), name='logout')
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('borrow/',borrow_book),
+    path('myborrow/',my_borrowed_books),
+    path('return-book/',returnbook),
+    path('admin-borrow-list/', admin_borrow_list),
+
 ]
